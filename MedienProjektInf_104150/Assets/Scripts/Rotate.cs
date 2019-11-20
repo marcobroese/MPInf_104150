@@ -4,7 +4,8 @@ using UnityEngine;
 /// <summary>
 /// Animation für Rotation von Parts
 /// Rotiert das Part um die angegebene Achse, Richtung und Geschwindigkeit.
-/// Im DebugModus kann die Angegebenen Rotationsparameter zur Laufzeit geändert werde.
+/// Es gibt keinen Debugmodus zur laufzeit, durch Zahlen ungenauigkeit kann es zu immer neuen berechnugen der rotations Achse kommen.
+/// Dieses entsteht da Unity eine Rotation (-90,0,0) als (0,(-/+)90, (+/-)90) darstellt
 /// </summary>
 public class Rotate : MonoBehaviour
 {
@@ -24,9 +25,6 @@ public class Rotate : MonoBehaviour
     //Rotationsrichtung
     private float rotatioDirection;
 
-    // Start is called before the first frame update
-    public bool debug;
-
     void Start()
     {
         InitRotation(axis, dir);
@@ -36,7 +34,6 @@ public class Rotate : MonoBehaviour
     void FixedUpdate()
     {
         this.transform.Rotate(rotationAxis, rotatioDirection * rotationSpeed * Time.deltaTime);
-        if(debug) InitRotation(axis, dir);
     }
     /// <summary>
     /// Initalisiert die Rotation und legt die Rotations Achse und Richtung fest 

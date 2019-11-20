@@ -16,9 +16,9 @@ public class Task : MonoBehaviour
     [Tooltip("Tool das zu der Task gehört.")]
     public GameObject tool;
     //Ursprungs Position für ein Part
-    private Vector3[] resetPart = new Vector3[3];
+    public Vector3 resetPart = new Vector3();
     //Ursprungs Position für ein Tool
-    private Vector3[] resetTool = new Vector3[3];
+    private Vector3 resetTool = new Vector3();
     //Referenz zu dem WorkStep dem der Task angehört
     private WorkStep workStepReference;
     //Flag ob eine Task erledigt wurde
@@ -44,8 +44,8 @@ public class Task : MonoBehaviour
         workStepReference = this.transform.parent.GetComponent<WorkStep>();
         SetTool();
         SetSelectableReference();
-        GetResetPositions(part, resetPart);
-        GetResetPositions(tool, resetTool);
+        if (resetPart != null) resetPart = part.transform.localPosition;
+        if (tool != null) resetTool = tool.transform.localPosition;
     }
     /// <summary>
     /// Setzt Referenzen in Selectable Objekt
@@ -71,32 +71,18 @@ public class Task : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// Speichert die Ursprungs Position zum angegebenem Obj
-    /// </summary>
-    /// <param name="obj">Obj zu dem Position gespeichert werden soll</param>
-    /// <param name="reset">Vector in dem die Position gespeichert werden soll</param>
-    private void GetResetPositions(GameObject obj, Vector3[] reset)
-    {
-        if (obj != null)
-        {
-            reset[0] = obj.transform.localPosition;
-            reset[1] = obj.transform.localEulerAngles;
-            reset[2] = obj.transform.localScale;
-        }
-    }
+   
     /// <summary>
     /// Setzt die Position des angegebenen Objekt zurück
     /// </summary>
     /// <param name="obj">angegebenes Objekt</param>
     /// <param name="reset">Position zum zurücksetzen</param>
-    private void ResetObjectTransform(GameObject obj, Vector3[] reset)
+    private void ResetObjectTransform(GameObject obj, Vector3 reset)
     {
         if (obj != null)
         {
-            obj.transform.localPosition = reset[0];
-            obj.transform.localEulerAngles = reset[1];
-            obj.transform.localScale = reset[2];
+            obj.transform.localPosition = reset;
+
         }
     }
     /// <summary>

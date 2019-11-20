@@ -20,12 +20,10 @@ public class AddLineRenderer : MonoBehaviour
     [Tooltip("Linien Länge")]
     public float lineLength = 1;
 
-    [Tooltip("Flag für Debug Modus")]
-    public bool debug;
-   
+
     //Referenz zu LineRendererOptions
     public Constants.LineRendererOption op;
-    
+
     //Referenz zum LineRenderer
     private LineRenderer lineRenderer;
     //StartPosition der Linie
@@ -36,7 +34,7 @@ public class AddLineRenderer : MonoBehaviour
     /// <summary>
     /// Bei Enable des Scripts werden Optionen für Line Renderer gesetzt.
     /// </summary>
-    private void OnEnable()
+    private void Start()
     {
         startPos = this.transform.position;
         InitLineDirection(lineDirection);
@@ -51,12 +49,11 @@ public class AddLineRenderer : MonoBehaviour
     void FixedUpdate()
     {
         lineRenderer.SetPosition(0, this.transform.position);
-        if (debug)
-        {
-            InitLineDirection(lineDirection);
-            InitLineRendererOption(renderOption);
-            lineRenderer.SetPosition(1, startPos + lineDir * lineLength);
-        }
+
+        InitLineDirection(lineDirection);
+        InitLineRendererOption(renderOption);
+        lineRenderer.SetPosition(1, startPos + lineDir * lineLength);
+
     }
     /// <summary>
     /// Wählt unterschiedliche Anzeigeoptionen für Line Renderer aus.

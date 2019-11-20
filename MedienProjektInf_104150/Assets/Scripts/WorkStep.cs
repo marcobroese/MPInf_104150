@@ -19,7 +19,7 @@ public class WorkStep : MonoBehaviour
     //Referenz zum InstructionManual
     private InstructionManual instructionManualReference;
     //Reset Position
-    private Vector3[][] reset;
+    private Vector3[] reset;
     //Flag ob ein WorkStep erledigt wurde
     public bool workStepDone;
     public bool WorkStepDone
@@ -40,14 +40,11 @@ public class WorkStep : MonoBehaviour
     {
         tasksDisplay = GameObject.FindGameObjectWithTag("TasksDisplay").GetComponent<TasksDisplay>();
         instructionManualReference = this.transform.parent.GetComponent<InstructionManual>();
-        reset = new Vector3[workStepParts.Length][];
+        reset = new Vector3[workStepParts.Length];
         for (int i = 0; i < workStepParts.Length; i++)
         {
             {
-                reset[i] = new Vector3[3];
-                reset[i][0] = workStepParts[i].transform.localPosition;
-                reset[i][1] = workStepParts[i].transform.localEulerAngles;
-                reset[i][2] = workStepParts[i].transform.localScale;
+                reset[i] = workStepParts[i].transform.localPosition;
             }
         }
     }
@@ -59,7 +56,7 @@ public class WorkStep : MonoBehaviour
         tasksDisplay.UpdateDisplay();
         if (AllTaskDone())
         {
-            foreach(GameObject obj in workStepParts)
+            foreach (GameObject obj in workStepParts)
             {
                 ToggleAnimationComponents(obj, false);
             }
@@ -97,11 +94,12 @@ public class WorkStep : MonoBehaviour
     /// </summary>
     /// <param name="obj">Objekt zum zurücksetzte</param>
     /// <param name="reset">Werte auf die gesetzt werden soll</param>
-    private void ResetObjectTransform(GameObject obj, Vector3[] reset)
+    private void ResetObjectTransform(GameObject obj, Vector3 reset)
     {
-        obj.transform.localPosition = reset[0];
-        obj.transform.localEulerAngles = reset[1];
-        obj.transform.localScale = reset[2];
+        if (obj = null)
+        {
+            obj.transform.localPosition = reset;
+        }
     }
     /// <summary>
     /// Gibt an ob alle Tasks erfüllt wurden im WorkStep
